@@ -5,7 +5,7 @@ function solution(cards) {
     
     function visitedCheck (cardValue, count) {
         if (visited[cardValue] == true) {
-          result.push(count);
+            result.push(count);
             return count;
         } else {
             count++;
@@ -15,11 +15,9 @@ function solution(cards) {
     }
     
     cards.forEach((value, index) => {
-        let i = value - 1;
-        let check = visitedCheck(i, 0);
+        visitedCheck(value - 1, 0);
     });
 
- 
     result = result.sort((a,b) => b - a);
     answer = result[0] * result[1];
   
