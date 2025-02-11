@@ -83,3 +83,37 @@ as (
             WHERE PARENT_ID IS NOT NULL # ***
     )
     GROUP BY GENERATION
+
+# 6 group by
+select
+        b.book_id
+        , b.author_id
+        , b.category
+        , s.total_sales * b.price as total_sales
+    from (
+        select
+            book_id
+            , sum(sales) as total_sales
+        from book_sales
+        group by book_id
+    ) s join book b on s.book_id = b.book_id
+    order by b.author_id asc, b.category desc
+) p join author a on p.author_id = a.author_id
+
+SELECT
+    a.AUTHOR_ID,
+    a.AUTHOR_NAME,
+    b.CATEGORY,
+    SUM(b.PRICE * s.SALES) AS TOTAL_SALES
+FROM
+    BOOK_SALES s
+    INNER JOIN BOOK b ON s.BOOK_ID = b.BOOK_ID
+    INNER JOIN AUTHOR a ON b.AUTHOR_ID = a.AUTHOR_ID
+WHERE
+    s.SALES_DATE BETWEEN '2022-01-01' AND '2022-01-31'
+GROUP BY
+    a.AUTHOR_ID,
+    b.CATEGORY
+ORDER BY
+    a.AUTHOR_ID ASC,
+    b.CATEGORY  DESC;
